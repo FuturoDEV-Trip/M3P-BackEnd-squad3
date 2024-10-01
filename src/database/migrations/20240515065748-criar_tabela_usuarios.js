@@ -3,9 +3,9 @@
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
-     await queryInterface.createTable('usuarios', {
-      id : {
+  async up(queryInterface, Sequelize) {
+    await queryInterface.createTable('usuarios', {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -27,7 +27,11 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      bairro: {
+      cep: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      endereco: {
         allowNull: false,
         type: Sequelize.STRING
       },
@@ -37,7 +41,7 @@ module.exports = {
       },
       sexo: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.ENUM('masculino', 'feminino', 'outro')
       },
       createdAt: {
         allowNull: false,
@@ -48,13 +52,11 @@ module.exports = {
         type: Sequelize.DATE
       }
     });
-
-
   },
 
 
-  async down (queryInterface, Sequelize) {
-      await queryInterface.dropTable('usuarios');
+  async down(queryInterface, Sequelize) {
+    await queryInterface.dropTable('usuarios');
   }
 };
 
