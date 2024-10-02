@@ -85,7 +85,7 @@
 ![des](https://github.com/user-attachments/assets/d698eba5-8409-41ee-ab97-656bcb5a82e2)
 
 ## Rodando o repositório:
-### Clone o repositório com o comando: git clone `https://github.com/rayssa-freitas/VIAGEM365.git`
+### Clone o repositório com o comando: git clone `https://github.com/rayssa-freitas/VIAGEM365.git](https://github.com/FuturoDEV-Trip/M3P-BackEnd-squad3.git`
 
 ### Intalação das dependências:
 1. `npm install`
@@ -111,4 +111,4 @@
 ### Instalação do Swagger AutoGen
 #### `npm install swagger-autogen`
 
-### Desenvolvido por Rayssa Maciel de Freitas
+### Desenvolvido por Rayssa Freitas, Daiane Arruda, Roni Rodrigues, Diego Aquino e Lívia Carvalho
