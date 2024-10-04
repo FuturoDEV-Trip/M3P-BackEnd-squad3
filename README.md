@@ -7,11 +7,11 @@
 
 ### A longo prazo, a plataforma poderá servir como um canal para promover o comércio local, destacando estabelecimentos que muitas vezes não têm visibilidade devido à falta de investimento em marketing. Isso não apenas apoia a economia local, mas também enriquece a experiência cultural dos usuários.
 
-### Exemplo Prático: Imagine um grupo de cinco entusiastas ansiosos para explorar o “Morro das Pedras”. Utilizando o DescubraFloripa, eles se conectam via WhatsApp, planejam o passeio e, através de recomendações no app, descobrem um ponto de venda tradicional de “caldo de cana-de-açúcar”.
+### Exemplo Prático: Imagine um grupo de cinco entusiastas ansiosos para explorar o “Morro das Pedras”. Utilizando o DescubraFloripa, eles se conectam via WhatsApp, planejam o passeio e, através de recomendações no app, descobrem um ponto de venda tradicional de “caldo de cana”.
 
 ### Inclusão Social e Cultural: A aplicação também serve como uma ponte para novos residentes e viajantes de curta duração, ajudando-os a se integrar e a conhecer as maravilhas locais. Para os moradores de longa data, é uma oportunidade de ver a cidade sob uma nova luz e para os anfitriões locais, uma chance de compartilhar o orgulho de sua “casa”.
 
-### Em essência, a “DescubraFloripa” é mais do que uma ferramenta de viagem; é um movimento para reconectar as pessoas com a riqueza cultural e natural de Florianópolis, transformando cada saída em uma aventura significativa e cada encontro em uma nova amizade. 
+### Em essência, o “DescubraFloripa” é mais do que uma ferramenta de viagem; é um movimento para reconectar as pessoas com a riqueza cultural e natural de Florianópolis, transformando cada saída em uma aventura significativa e cada encontro em uma nova amizade. 
 
 
 ## Objetivos:
@@ -74,6 +74,8 @@
 15. Hooks (useState, useEffect): Permitem gerenciar estado e efeitos colaterais em componentes funcionais. useState foi utilizado para controlar o estado dos formulários e listas, enquanto useEffect poderia ser usado para gerenciar operações assíncronas, como fetch de dados.
 
 16. Bootstrapp ou CSS: ...
+
+17. Docker e docker compose
 
 ## Diagramas:
 ![image](https://github.com/rayssa-freitas/VIAGEM365/assets/149340917/f55b4c0d-e30f-44e5-86dc-a6aef4a85752)
