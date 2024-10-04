@@ -76,6 +76,12 @@ class UsuarioController {
        if (response.data.error) {
         return res.status(400).json({})
        }
+
+       if(!logradouro || !bairro || !cidade || !estado) {
+        return res.status(400).json({
+          message:"Erro ao obter o endereço. Verifique o CEP informado!"
+       })
+      }
        const usuario = await Usuario.create({
         nome: nome,
         cpf: cpf,
