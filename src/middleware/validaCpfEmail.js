@@ -2,13 +2,16 @@ const yup = require('yup');
 const Usuario = require('../models/Usuario');
 
 const userSchema = yup.object().shape({
-    nome: yup.string().required("Nome é obrigatório").min(3, "Mínimo de 3 caracteres"),
+    nome: yup.string().required("Nome é um campo obrigatório").min(3, "Mínimo de 3 caracteres"),
     email: yup.string().email("Formato de e-mail inválido").required("E-mail é obrigatório"),
-    password: yup.string().required("Senha é obrigatória").min(4, "Mínimo de 4 caracteres"),
-    endereco: yup.string().required("Formato de endereço inválido").required("Endereço é obrigatório"),
-    cpf: yup.string("necessaro 11 números").required("CPF é obrigatório").min(11).max(11),
-    data_nascimento: yup.date().required("Data de nascimento é obrigatória"),
-    sexo: yup.string().required('Sexo é obrigatório')
+    password: yup.string().required("Senha é um campo obrigatório").min(8, "Mínimo de 8 caracteres").max(16, "Máximo de 16 caracteres"),
+    logradouro: yup.string().required("Logradouro é um campo obrigatório"),
+    bairro: yup.string().required("Bairro é um campo obrigatório"),
+    cidade: yup.string().required("Cidade é um campo obrigatório"),
+    estado: yup.string().required("Estado é um campo obrigatório"),
+    cpf: yup.string("Necessário 11 números").required("CPF é é um campo obrigatório").min(11).max(11),
+    data_nascimento: yup.date().required("Data de nascimento é é um campo obrigatório"),
+    sexo: yup.string().required('Sexo é um campo obrigatório')
         .test('validFormat', 'Sexo inválido. Opções válidas: Masculino, Feminino, Outro', (value) => {
             const validarGenero = ['Masculino', 'Feminino', 'Outro'];
             return validarGenero.includes(value);

@@ -16,7 +16,7 @@ class UsuarioController {
 
     async cadastrar(req, res){
       try{
-     const { nome, cpf, email, senha, endereco, data_nascimento, sexo } = req.body;
+     const { nome, cpf, email, senha, numero, data_nascimento, sexo } = req.body;
 
         const cep = req.body.cep.replace(/[^0-9]/g, "");
 
@@ -69,13 +69,24 @@ class UsuarioController {
          message: 'Não foi possível realizar o seu cadastro. Lembre-se a senha deve conter, uma letra maiúscula, uma letra minúscula, um número, um caractere, no mínimo. Precisa conter entre 8 à 16 dígitos.'
         })
        }
+
+       const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`)
+       const {logradouro, bairro, local: cidade, uf: estado} = response.data_nascimento
+
+       if (response.data.error) {
+        return res.status(400).json({})
+       }
        const usuario = await Usuario.create({
         nome: nome,
         cpf: cpf,
         email: email,
         senha: senha,
         cep: cep,
-        endereco: endereco,
+        logradouro: logradouro,
+        numero: numero,
+        bairro: bairro,
+        cidade: cidade,
+        estado: estado,
         data_nascimento: data_nascimento,
         sexo: sexoConversaoMinusculo
     })

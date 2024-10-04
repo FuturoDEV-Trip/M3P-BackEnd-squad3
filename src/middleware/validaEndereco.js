@@ -6,13 +6,12 @@ async function validaEndereco(req, res, next) {
     try {
         const endereco = await buscaEnderecoCep(cep)
 
-        if(endereco.error) {
+        if(!endereco) {
             return res.status(401).send({
                 message: "CEP inválido!",
                 cause: error.message
                })
     }
-    
     req.endereco = endereco
     next()
 } catch (error) {
