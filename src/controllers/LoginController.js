@@ -1,3 +1,4 @@
+const bcrycpt = require('bcryptjs')
 const { sign } = require('jsonwebtoken')
 const Usuario = require("../models/Usuario")
 
@@ -17,11 +18,16 @@ class LoginController {
                 where: { email: email, senha: senha }
             })
             if (!usuario) {
-                return res.status(404).json({ erro: 'Nenhum usuario corresponde ao email e senha informados' })
+                return res.status(404).json({ erro: 'Nenhum usuário corresponde ao e-mail informado' })
             }
+            const validandoSenha = await bcrycpt.compare(senha, usuario.senha)
+            
+            if(!validandoSenha) {
+                return res.status(401).json({ erro: 'Senha incorreta!' })
 
+            }
             const payload = { usuario_id: usuario.id, email: usuario.email, nome: usuario.nome }
-            const token = sign(payload, process.env.SECRET_JWT)
+            const token = sign(payload, process.env.SECRET_JWT, { expiresIn: "1h"})
 
             res.status(200).json({ Token: token })
         } catch (error) {

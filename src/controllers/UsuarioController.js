@@ -1,6 +1,7 @@
 const validaCpfEmail = require('../middleware/validaCpfEmail');
 const Usuario = require('../models/Usuario')
 const { validandoSenha } = require('../services/validation.service')
+const bcrycpt = require('bcryptjs')
 const yup = require('yup');
  
 class UsuarioController {
@@ -82,11 +83,14 @@ class UsuarioController {
           message:"Erro ao obter o endereço. Verifique o CEP informado!"
        })
       }
+
+       const senhaHasheada = await bcrycpt.hash(senha, 16)
+
        const usuario = await Usuario.create({
         nome: nome,
         cpf: cpf,
         email: email,
-        senha: senha,
+        senha: senhaHasheada,
         cep: cep,
         logradouro: logradouro,
         numero: numero,
