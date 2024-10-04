@@ -17,7 +17,12 @@ module.exports = {
       },
       cpf: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        unique: true,
+        validate: {
+          len: [11, 11],
+          isNumeric: true,
+        } 
       },
       email: {
         allowNull: false,
