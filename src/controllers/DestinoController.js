@@ -6,7 +6,6 @@ class DestinoController {
   async consultar(req, res) {
     const cep = req.params.cep;
 
-
     try {
       const response = await axios.get(`https://nominatim.openstreetmap.org/search?format=json&postalcode=${cep}&country=Brazil&limit=1`);
       console.log(response.data);
@@ -21,8 +20,13 @@ class DestinoController {
   async cadastrar(req, res) {
     const { destino_nome, localizacao, descricao, cep, latitude, longitude } = req.body;
 
-
     try {
+      const autenticacao_id = req.payload.sub
+
+      if(!autenticacao_id){
+        return res.status(403).json({ message: 'Usuário não autorizado!' });
+      }
+
       if (!destino_nome) {
         return res.status(400).json({ message: 'O preenchimento do campo destino é obrigatório!' });
       }
@@ -32,6 +36,9 @@ class DestinoController {
         return res.status(400).json({ message: 'O preenchimento do campo localização é obrigatório!' });
       }
 
+      if (!descricao) {
+        return res.status(400).json({ message: 'O preenchimento do campo descrição é obrigatório!' });
+      }
 
       if (!cep) {
         return res.status(400).json({ message: 'O preenchimento do campo cep é obrigatório!' });
@@ -95,7 +102,6 @@ class DestinoController {
   async listarPorId(req, res) {
     const { usuario_id } = req.params;
     const autenticacao_id = req.payload.sub;
-
 
     if (parseInt(usuario_id) !== autenticacao_id) {
       return res.status(403).json({ message: 'Usuário não autorizado' });
