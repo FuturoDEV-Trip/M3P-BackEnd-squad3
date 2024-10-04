@@ -21,6 +21,7 @@ class DestinoController {
     const { destino_nome, localizacao, descricao, cep, latitude, longitude } = req.body;
 
     try {
+      const usuario_id = req.payload.sub
       const autenticacao_id = req.payload.sub
 
       if(!autenticacao_id){
@@ -30,7 +31,6 @@ class DestinoController {
       if (!destino_nome) {
         return res.status(400).json({ message: 'O preenchimento do campo destino é obrigatório!' });
       }
-
 
       if (!localizacao) {
         return res.status(400).json({ message: 'O preenchimento do campo localização é obrigatório!' });
@@ -71,7 +71,13 @@ class DestinoController {
       res.status(201).json(destino);
     } catch (error) {
       console.error("Erro ao cadastrar destino", error);
+     
       res.status(500).send({ error: 'Erro ao processar a solicitação' });
+
+      res.status(500).send({
+        error: 'Erro ao cadastrar destino',
+        cause: error.message
+      });
     }
   }
 
