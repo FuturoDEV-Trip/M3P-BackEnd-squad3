@@ -16,7 +16,7 @@ class UsuarioController {
 
     async cadastrar(req, res){
       try{
-     const { nome, cpf, email, senha, endereco, data_nascimento, sexo } = req.body;
+     const { nome, cpf, email, senha, logradouro, numero, bairro, cidade, estado, data_nascimento, sexo } = req.body;
 
         const cep = req.body.cep.replace(/[^0-9]/g, "");
 
@@ -75,7 +75,11 @@ class UsuarioController {
         email: email,
         senha: senha,
         cep: cep,
-        endereco: endereco,
+        logradouro: logradouro,
+        numero: numero,
+        bairro: bairro,
+        cidade: cidade,
+        estado: estado,
         data_nascimento: data_nascimento,
         sexo: sexoConversaoMinusculo
     })
