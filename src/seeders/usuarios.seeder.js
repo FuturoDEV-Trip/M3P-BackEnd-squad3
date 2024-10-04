@@ -10,7 +10,11 @@ module.exports = {
     cpf: "78398747283",
     email: "rayssafreitas102@gmail.com",
     senha: "Rkd90#!js",
-    bairro: "Centro",
+    logradouro: "Av Mauro Ramos",
+    numero: 300,
+    bairro: "centro",
+    cidade: "Florianópolis",
+    estado: "SC",
     data_nascimento: "2001-01-24",
     sexo: "Feminino"
    },

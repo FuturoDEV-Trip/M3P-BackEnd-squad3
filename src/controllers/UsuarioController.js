@@ -1,51 +1,45 @@
+const validaCpfEmail = require('../middleware/validaCpfEmail');
 const Usuario = require('../models/Usuario')
 const { validandoSenha } = require('../services/validation.service')
+const yup = require('yup');
  
 class UsuarioController {
+    async consultar(req, res) {
+        try {
+            const usuarios = await Usuario.findAll();
+            res.status(200).json(usuarios);
+        } catch (error) {
+            console.error(error.message);
+            res.status(500).json({ error: 'Erro ao processar a solicitação' });
+        }
+    }
 
     async cadastrar(req, res){
       try{
-       const nome = req.body.nome
-       const cpf = req.body.cpf
-       const email = req.body.email
-       const senha = req.body.senha
-       const bairro = req.body.bairro
-       const data_nascimento = req.body.data_nascimento
-       const sexo = req.body.sexo
+     const { nome, cpf, email, senha, numero, data_nascimento, sexo } = req.body;
 
+        const cep = req.body.cep.replace(/[^0-9]/g, "");
+
+        if (cpf.length < 11 || cpf.length > 11) {
+          return res.status(400).json({ error: 'preenchimento somente números 11 digitos' });
+        }
        if(!nome) {
         return res.status(400).json({
          message: 'O preenchimento do campo nome é obrigatório!'
         })
        }
-   
-       if(!cpf) {
-        return res.status(400).json({
-         message: 'O preenchimento do campo CPF é obrigatório!'
-        })
-       }
-   
-       if(!(cpf.length == 11)) {
-        return res.status(400).json({
-         message: 'O campo CPF deve conter somente 11 dígitos!'
-        })
-       }
-   
-       if(!email) {
-        return res.status(400).json({
-         message: 'O e-mail é um campo obrigatório!'
-        })
-       }
-   
        if(!senha) {
         return res.status(400).json({
          message: 'A senha é um campo obrigatório!'
         })
        }
-   
-       if(!bairro) {
+        if (cep.length < 8 || cep.length > 8) {
+          return res.status(400).json({ error: 'O preenchimento do campo cep é obrigatório' });
+        }
+
+       if(!endereco) {
         return res.status(400).json({
-         message: 'O preenchimento do campo bairro é obrigatório!'
+         message: 'O preenchimento do campo endereço é obrigatório!'
         })
        }
    
@@ -62,7 +56,7 @@ class UsuarioController {
        }
 
        const sexoConversaoMinusculo = sexo.toLowerCase();
-
+       console.log(sexoConversaoMinusculo)
 
        if(!['masculino', 'feminino', 'outro'].includes(sexoConversaoMinusculo)) {
         return res.status(400).json({
@@ -75,41 +69,34 @@ class UsuarioController {
          message: 'Não foi possível realizar o seu cadastro. Lembre-se a senha deve conter, uma letra maiúscula, uma letra minúscula, um número, um caractere, no mínimo. Precisa conter entre 8 à 16 dígitos.'
         })
        }
-   
-       const cpfExistente = await Usuario.findOne({
-        where: {
-        cpf: cpf
-        }
-       });
-   
-       if (cpfExistente) {
-        return res.status(400).json({
-         message: 'Esse CPF pertence a uma conta que já possui cadastro.'
-        })
+
+       const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`)
+       const {logradouro, bairro, local: cidade, uf: estado} = response.data_nascimento
+
+       if (response.data.error) {
+        return res.status(400).json({})
        }
-   
-       const emailExistente = await Usuario.findOne({
-        where: {
-        email: email
-        }
-       });
-   
-       if (emailExistente) {
+
+       if(!logradouro || !bairro || !cidade || !estado) {
         return res.status(400).json({
-         message: 'Esse e-mail pertence a uma conta que já possui cadastro.'
-        })
-       }
-   
+          message:"Erro ao obter o endereço. Verifique o CEP informado!"
+       })
+      }
        const usuario = await Usuario.create({
         nome: nome,
         cpf: cpf,
         email: email,
         senha: senha,
-        bairro: bairro, 
+        cep: cep,
+        logradouro: logradouro,
+        numero: numero,
+        bairro: bairro,
+        cidade: cidade,
+        estado: estado,
         data_nascimento: data_nascimento,
-        sexo: sexo
+        sexo: sexoConversaoMinusculo
     })
-
+   
     res.status(201).json(usuario)
       
     
