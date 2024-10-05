@@ -2,11 +2,11 @@ const { Router } = require('express')
 const UsuarioController = require('../controllers/UsuarioController');
 
 const { auth } = require('../middleware/auth');
-const validaCpfEmail = require('../middleware/validaCpfEmail');
+const {validaCpfEmail} = require('../middleware/validaCpfEmail');
 
 const usuarioRoutes = new Router() 
 
-usuarioRoutes.post('/cadastrar', UsuarioController.cadastrar
+usuarioRoutes.post('/cadastrar', validaCpfEmail, UsuarioController.cadastrar
    /*
     #swagger.tags = ['Usuario'],
     #swagger.parameters['body'] = {
@@ -24,8 +24,6 @@ usuarioRoutes.post('/cadastrar', UsuarioController.cadastrar
     }
    */
    )
-   usuarioRoutes.get('/consultar', validaCpfEmail, UsuarioController.consultar)
+   usuarioRoutes.get('/consultar', UsuarioController.consultar)
 
-
-  
 module.exports = usuarioRoutes 
