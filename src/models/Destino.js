@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize')
 const { connection } = require('../database/connection')
-const Usuario = require('./Usuario')
+const {Usuario} = require('./Usuario')
 
 const Destino = connection.define('destinos', {
     destino_nome:{
