@@ -1,7 +1,6 @@
-const validaCpfEmail = require('../middleware/validaCpfEmail');
-const Usuario = require('../models/Usuario')
+const {Usuario} = require('../models/Usuario')
 const { validandoSenha } = require('../services/validation.service')
-const yup = require('yup');
+const bcrypt = require('bcrypt')
  
 class UsuarioController {
     async consultar(req, res) {
@@ -16,7 +15,7 @@ class UsuarioController {
 
     async cadastrar(req, res){
       try{
-     const { nome, cpf, email, senha, numero, data_nascimento, sexo } = req.body;
+     const { nome, cpf, email, senha, endereco, data_nascimento, sexo } = req.body;
 
         const cep = req.body.cep.replace(/[^0-9]/g, "");
 
@@ -69,35 +68,36 @@ class UsuarioController {
          message: 'Não foi possível realizar o seu cadastro. Lembre-se a senha deve conter, uma letra maiúscula, uma letra minúscula, um número, um caractere, no mínimo. Precisa conter entre 8 à 16 dígitos.'
         })
        }
+        const senhaEncriptada = await bcrypt.hash(senha, 10);
+       //const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`)
+       //const {logradouro, bairro, local: cidade, uf: estado} = response.data_nascimento
 
-       const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`)
-       const {logradouro, bairro, local: cidade, uf: estado} = response.data_nascimento
+      //  if (response.data.error) {
+      //   return res.status(400).json({})
+      //  }
 
-       if (response.data.error) {
-        return res.status(400).json({})
-       }
-
-       if(!logradouro || !bairro || !cidade || !estado) {
-        return res.status(400).json({
-          message:"Erro ao obter o endereço. Verifique o CEP informado!"
-       })
-      }
-       const usuario = await Usuario.create({
+      //  if(!logradouro || !bairro || !cidade || !estado) {
+      //   return res.status(400).json({
+      //     message:"Erro ao obter o endereço. Verifique o CEP informado!"
+      //  })
+      // }
+       const novoUsuario = await Usuario.create({
         nome: nome,
         cpf: cpf,
         email: email,
-        senha: senha,
+        senha: senhaEncriptada,
         cep: cep,
-        logradouro: logradouro,
-        numero: numero,
-        bairro: bairro,
-        cidade: cidade,
-        estado: estado,
+        endereco: endereco,
+        // logradouro: logradouro,
+        // numero: numero,
+        // bairro: bairro,
+        // cidade: cidade,
+        // estado: estado,
         data_nascimento: data_nascimento,
         sexo: sexoConversaoMinusculo
     })
    
-    res.status(201).json(usuario)
+    res.status(201).json(novoUsuario)
       
     
       } catch (error) {

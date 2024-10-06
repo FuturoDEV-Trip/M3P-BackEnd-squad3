@@ -1,31 +1,38 @@
-const { sign } = require('jsonwebtoken')
-const Usuario = require("../models/Usuario")
+const {Usuario} = require("../models/Usuario")
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 class LoginController {
     async login(req, res) {
         try {
             const { email, senha } = req.body
-            if (!email) {
-                return res.status(400).json({ erro: 'Informe o email' })
-            }
 
-            if (!senha) {
-                return res.status(400).json({ erro: 'Informe a sua senha' })
+            if (!email || !senha) {
+                const erro = !email ? 'Informe o email' : 'Informe a sua senha';
+                return res.status(400).json({ erro });
             }
 
             const usuario = await Usuario.findOne({
-                where: { email: email, senha: senha }
+                where: { email: email}
             })
+
             if (!usuario) {
                 return res.status(404).json({ erro: 'Nenhum usuario corresponde ao email e senha informados' })
             }
 
-            const payload = { usuario_id: usuario.id, email: usuario.email, nome: usuario.nome }
-            const token = sign(payload, process.env.SECRET_JWT)
+            const senhaCriptografada = await bcrypt.compare(senha, usuario.senha)
 
-            res.status(200).json({ Token: token })
-        } catch (error) {
-            return res.status(500).json({ error: error, message: 'Algo deu errado' })
+            if (!senhaCriptografada) {
+                return res.status(400).json({ erro: 'Nenhum usuario corresponde ao email e senha informados' })
+            }
+
+            const token = jwt.sign({id: usuario.id, email: usuario.email, nome:usuario.nome}, process.env.SECRET_JWT, {expiresIn: '1h'});
+            console.log('gerado no login: ',token);
+            return res.json({user:{id: usuario.id, email: usuario.email, nome: usuario.nome}, token});
+            
+
+            } catch (err) {
+            return res.status(500).json({ error: err, message: 'Erro servidor' })
         }
     }
 }

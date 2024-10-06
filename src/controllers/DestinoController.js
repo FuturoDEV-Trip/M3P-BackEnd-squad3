@@ -1,11 +1,11 @@
 const axios = require('axios')
 const Destino = require("../models/Destino")
-const Usuario = require("../models/Usuario")
+const {Usuario} = require("../models/Usuario")
+const jwt = require('jsonwebtoken')
 
 class DestinoController {
   async consultar(req, res) {
     const cep = req.params.cep;
-
 
     try {
       const response = await axios.get(`https://nominatim.openstreetmap.org/search?format=json&postalcode=${cep}&country=Brazil&limit=1`);
@@ -17,12 +17,12 @@ class DestinoController {
     }
   }
 
-
   async cadastrar(req, res) {
     const { destino_nome, localizacao, descricao, cep, latitude, longitude } = req.body;
-
-
+    
     try {
+      const idUsuario = req.user.id;
+
       if (!destino_nome) {
         return res.status(400).json({ message: 'O preenchimento do campo destino é obrigatório!' });
       }
@@ -48,9 +48,9 @@ class DestinoController {
       }
 
 
-      const data = await axios.get(
-        `https://nominatim.openstreetmap.org/search?format=json&postalcode=${cep}&country=Brazil&limit=1`
-      );
+      // const data = await axios.get(
+      //   `https://nominatim.openstreetmap.org/search?format=json&postalcode=${cep}&country=Brazil&limit=1`
+      // );
 
 
       const destino = await Destino.create({
@@ -58,8 +58,9 @@ class DestinoController {
         localizacao,
         descricao,
         cep,
-        latitude: data.data[0].lat,
-        longitude: data.data[0].lon
+        latitude: latitude,
+        longitude: longitude,
+        usuario_id: idUsuario
       });
       res.status(201).json(destino);
     } catch (error) {
