@@ -6,11 +6,12 @@ const loginRoutes = require("./login.route")
 const axios = require('axios')
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
+const { auth } = require('../middleware/auth')
 const routes = Router()
 
 routes.use('/usuarios', usuarioRoutes)
 routes.use('/login', loginRoutes)
-routes.use('/destinos', destinoRoutes)
+routes.use('/destinos', auth, destinoRoutes)
  
 routes.use('/docs', swaggerUi.serve)
 routes.get('/docs', swaggerUi.setup(swaggerDocument))

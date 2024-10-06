@@ -1,6 +1,6 @@
 const { Router } = require("express")
 const LoginController = require("../controllers/LoginController")
-const Usuario = require("../models/Usuario")
+const {Usuario} = require("../models/Usuario")
 const { sign } = require("jsonwebtoken")
 const loginRoutes = Router()
 
