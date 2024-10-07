@@ -21,7 +21,7 @@ async function auth(req, res, next) {
 
       req['payload'] = verify(token, process.env.SECRET_JWT)
 
-    next()
+      next()
    } catch (error) {
       return res.status(401).send({
       message: "Autenticação falhou!",
