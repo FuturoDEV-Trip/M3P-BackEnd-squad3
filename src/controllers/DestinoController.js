@@ -51,7 +51,7 @@ class DestinoController {
   }
 
   async excluir(req, res) {
-    const id  = req.params;
+    const {id}  = req.params;
     const usuarioId = req.user.id;
     try {
 
@@ -65,7 +65,7 @@ class DestinoController {
       if (!destino) {
         return res.status(404).json({ message: 'Destino não encontrado' });
       }
-      await destino.destroy();
+      await Destino.destroy({ where: { id } });
 
       res.status(204).json();
     } catch (error) {
