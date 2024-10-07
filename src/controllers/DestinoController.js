@@ -1,16 +1,15 @@
 const axios = require('axios')
 const Destino = require("../models/Destino")
-const {Usuario} = require("../models/Usuario")
 const jwt = require('jsonwebtoken')
+const { Usuario } = require("../models/Usuario")
 
 class DestinoController {
   async consultar(req, res) {
-    const cep = req.params.cep;
 
     try {
-      const response = await axios.get(`https://nominatim.openstreetmap.org/search?format=json&postalcode=${cep}&country=Brazil&limit=1`);
-      console.log(response.data);
-      res.status(200).json(response.data);
+      const destinos = await Destino.findAll();
+      res.status(200).json(destinos);
+
     } catch (error) {
       console.error("Erro ao consultar o CEP", error);
       res.status(500).send({ error: 'Erro ao processar a solicitação' });
@@ -19,39 +18,21 @@ class DestinoController {
 
   async cadastrar(req, res) {
     const { destino_nome, localizacao, descricao, cep, latitude, longitude } = req.body;
-    
+
     try {
       const idUsuario = req.user.id;
 
-      if (!destino_nome) {
-        return res.status(400).json({ message: 'O preenchimento do campo destino é obrigatório!' });
+      const camposObrigatorios = { destino_nome, localizacao, cep, latitude, longitude };
+
+      const erros = validarCamposObrigatorios(camposObrigatorios);
+
+      if (erros.length > 0) {
+        return res.status(400).json({ message: erros });
       }
 
-
-      if (!localizacao) {
-        return res.status(400).json({ message: 'O preenchimento do campo localização é obrigatório!' });
+      function validarCamposObrigatorios(campos) {
+        return Object.keys(campos).filter(campo => !campos[campo]);
       }
-
-
-      if (!cep) {
-        return res.status(400).json({ message: 'O preenchimento do campo cep é obrigatório!' });
-      }
-
-
-      if (!latitude) {
-        return res.status(400).json({ message: 'O preenchimento do campo latitude é obrigatório!' });
-      }
-
-
-      if (!longitude) {
-        return res.status(400).json({ message: 'O preenchimento do campo longitude é obrigatório!' });
-      }
-
-
-      // const data = await axios.get(
-      //   `https://nominatim.openstreetmap.org/search?format=json&postalcode=${cep}&country=Brazil&limit=1`
-      // );
-
 
       const destino = await Destino.create({
         destino_nome,
@@ -69,21 +50,22 @@ class DestinoController {
     }
   }
 
-
   async excluir(req, res) {
-    const { destino_id } = req.params;
-
-
+    const id  = req.params;
+    const usuarioId = req.user.id;
     try {
-      const destino = await Destino.destroy({
-        where: { id: destino_id }
-      });
 
+      console.log("id do destino: ", id);
+      console.log("id do usuario: ", usuarioId);
+
+      const destino = await Destino.findOne({
+        where: { id: id, usuario_id: usuarioId }
+      });
 
       if (!destino) {
         return res.status(404).json({ message: 'Destino não encontrado' });
       }
-
+      await destino.destroy();
 
       res.status(204).json();
     } catch (error) {
