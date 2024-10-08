@@ -41,8 +41,8 @@ module.exports = {
         type: Sequelize.STRING
       },
       numero: {
-        allowNull: false,
-        type: Sequelize.INTEGER
+        allowNull: true,
+        type: Sequelize.STRING
       },
       bairro: {
         allowNull: false,
@@ -63,6 +63,11 @@ module.exports = {
       sexo: {
         allowNull: false,
         type: Sequelize.ENUM('masculino', 'feminino', 'outro')
+      },
+      logado: {
+        allowNull: false,
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
       },
       createdAt: {
         allowNull: false,
