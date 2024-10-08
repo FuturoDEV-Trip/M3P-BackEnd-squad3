@@ -77,6 +77,9 @@
 
 17. Docker e docker compose
 
+18. Yup 
+
+
 ## Diagramas:
 ![image](https://github.com/rayssa-freitas/VIAGEM365/assets/149340917/f55b4c0d-e30f-44e5-86dc-a6aef4a85752)
 
