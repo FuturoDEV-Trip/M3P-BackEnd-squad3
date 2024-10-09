@@ -7,11 +7,31 @@ class DestinoController {
   async consultar(req, res) {
 
     try {
-      const destinos = await Destino.findAll();
+      const destinos = await Destino.findAll({
+        attributes: ['id','destino_nome', 'localizacao', 'descricao', 'latitude', 'longitude','usuario_id']
+      });
       res.status(200).json(destinos);
 
     } catch (error) {
       console.error("Erro ao consultar o CEP", error);
+      res.status(500).send({ error: 'Erro ao processar a solicitação' });
+    }
+  }
+  async consultarPorId(req, res) {
+    const { id } = req.params;
+
+    try {
+      const destino = await Destino.findByPk(id,{
+        attributes:['destino_nome','localizacao','descricao','latitude','longitude']
+      });
+
+      if (!destino) {
+        return res.status(404).json({ message: 'Destino não encontrado' });
+      }
+
+      res.status(200).json(destino);
+    } catch (error) {
+      console.error("Erro ao consultar destino por ID", error);
       res.status(500).send({ error: 'Erro ao processar a solicitação' });
     }
   }
@@ -51,7 +71,7 @@ class DestinoController {
   }
 
   async excluir(req, res) {
-    const id  = req.params;
+    const {id}  = req.params;
     const usuarioId = req.user.id;
     try {
 

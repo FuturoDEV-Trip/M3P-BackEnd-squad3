@@ -13,13 +13,13 @@ const Destino = connection.define('destinos', {
      type: DataTypes.STRING,
     },
     cep:{
-     type: DataTypes.INTEGER, 
+     type: DataTypes.STRING, 
     },
     latitude:{
-     type: DataTypes.FLOAT,
+     type: DataTypes.STRING,
     },
     longitude:{
-     type: DataTypes.FLOAT, 
+     type: DataTypes.STRING, 
     }
 })
 
