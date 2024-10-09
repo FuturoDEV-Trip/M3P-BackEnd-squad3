@@ -20,7 +20,7 @@
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.11.5",
     "pg-connection-string": "^2.6.0",
-    "sequelize": "^6.37.2",
+    "sequelize": "^6.37.4",
     "swagger-autogen": "^2.23.7",
     "swagger-ui-express": "^5.0.0",
     "yup": "^1.4.0"

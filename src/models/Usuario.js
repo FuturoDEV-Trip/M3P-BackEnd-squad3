@@ -30,9 +30,25 @@ const Usuario = connection.define('usuarios', {
       type: DataTypes.STRING,
       allowNull: false,
    },
-   endereco: {
-      type: DataTypes.STRING,
+   logradouro: {
       allowNull: false,
+      type: DataTypes.STRING
+   },
+   numero: {
+      allowNull: true,
+      type: DataTypes.STRING
+   },
+   bairro: {
+      allowNull: false,
+      type: DataTypes.STRING
+   },
+   cidade: {
+      allowNull: false,
+      type: DataTypes.STRING
+   },
+   estado: {
+      allowNull: false,
+      type: DataTypes.STRING
    },
    data_nascimento: {
       type: DataTypes.DATE,
@@ -41,7 +57,12 @@ const Usuario = connection.define('usuarios', {
    sexo: {
       type: DataTypes.ENUM('masculino', 'feminino', 'outro'),
       allowNull: false,
-   }
+   },
+   logado: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+   },
 })
 
-module.exports = {Usuario} 
+module.exports = {Usuario}
