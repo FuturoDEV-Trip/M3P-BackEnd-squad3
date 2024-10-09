@@ -11,8 +11,8 @@ const dashboardRoute = require('./dashboard.route')
 const routes = Router()
 
 routes.use('/usuarios', usuarioRoutes)
-routes.use('/login', loginRoutes)
-routes.use('/destinos', auth, destinoRoutes)
+routes.use('/auth', loginRoutes)
+routes.use('/destinos', destinoRoutes)
 routes.use('/dashboard',dashboardRoute)
  
 routes.use('/docs', swaggerUi.serve)

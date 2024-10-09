@@ -1,4 +1,4 @@
-const {Usuario} = require("../models/Usuario")
+const { Usuario } = require("../models/Usuario")
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
@@ -13,12 +13,13 @@ class LoginController {
             }
 
             const usuario = await Usuario.findOne({
-                where: { email: email}
+                where: { email: email }
             })
 
             if (!usuario) {
                 return res.status(404).json({ erro: 'Nenhum usuario corresponde ao email e senha informados' })
             }
+            await Usuario.update({ ...usuario, logado: true }, { where: { id: usuario.id } });
 
             const senhaCriptografada = await bcrypt.compare(senha, usuario.senha)
 
@@ -26,12 +27,37 @@ class LoginController {
                 return res.status(400).json({ erro: 'Nenhum usuario corresponde ao email e senha informados' })
             }
 
-            const token = jwt.sign({id: usuario.id, email: usuario.email, nome:usuario.nome}, process.env.SECRET_JWT, {expiresIn: '1h'});
-            console.log('gerado no login: ',token);
-            return res.json({user:{id: usuario.id, email: usuario.email, nome: usuario.nome}, token});
-            
+            const token = jwt.sign({ id: usuario.id, email: usuario.email, nome: usuario.nome }, process.env.SECRET_JWT, { expiresIn: '1h' });
+            console.log('gerado no login: ', token);
+            return res.json({ user: { id: usuario.id, email: usuario.email, nome: usuario.nome }, token });
 
-            } catch (err) {
+
+        } catch (err) {
+            return res.status(500).json({ error: err, message: 'Erro servidor' })
+        }
+    }
+    async logout(req, res) {
+        try {
+            let token = req.headers['authorization'];
+
+            if (token.startsWith('Bearer ')) {
+                token = token.slice(7, token.length);
+            }
+
+            let tokenDecoded = await jwt.verify(token, process.env.SECRET_JWT);
+
+            const usuario = await Usuario.findOne({
+                where: { id: tokenDecoded.id }
+            })
+
+            if (!!usuario) {
+                await Usuario.update({ ...usuario, logado: false }, { where: { id: tokenDecoded.id } });
+            }
+
+            res.status(200).json({
+                message: 'Logout realizado com sucesso', token: tokenDecoded
+            });
+        } catch (err) {
             return res.status(500).json({ error: err, message: 'Erro servidor' })
         }
     }
