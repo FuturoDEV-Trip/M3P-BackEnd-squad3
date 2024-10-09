@@ -34,15 +34,15 @@ module.exports = {
       },
       cep: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       latitude: {
         allowNull: false,
-        type: Sequelize.FLOAT
+        type: Sequelize.STRING
       },
       longitude: {
         allowNull: false,
-        type: Sequelize.FLOAT
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
