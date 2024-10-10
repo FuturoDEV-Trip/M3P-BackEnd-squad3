@@ -65,7 +65,7 @@ module.exports = {
           nome: "João da Silva",
           cpf: "78398747284",
           email: "joao@email.com",
-          senha: bcript.hashSync("Joao1234", 10),
+          senha: bcript.hashSync("Joao1234!", 10),
           cep: "57037020",
           logradouro: "Avenida Almirante Álvaro Calheiros",
           numero: "123",
