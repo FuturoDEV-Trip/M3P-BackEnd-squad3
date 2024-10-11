@@ -42,6 +42,11 @@ usuarioRoutes.post('/cadastrar', UsuarioController.cadastrar
     }
    */
    )
-
+usuarioRoutes.get('/consultar', UsuarioController.consultar
+   /*
+    #swagger.tags = ['Usuario'],
+    #swagger.description = 'Endpoint para consultar todos os usuarios'
+   */
+   )
   
 module.exports = usuarioRoutes 

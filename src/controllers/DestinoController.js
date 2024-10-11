@@ -37,7 +37,10 @@ class DestinoController {
   }
 
   async cadastrar(req, res) {
-    const { destino_nome, localizacao, descricao, cep, latitude, longitude } = req.body;
+    const { descricao, cep, latitude, longitude, bairro, cidade, estado,logradouro, local } = req.body;
+    
+    const destino_nome = local;
+    const localizacao = `${logradouro}, ${bairro}, ${cidade}, ${estado}`;
 
     try {
       const idUsuario = req.user.id;
@@ -45,7 +48,7 @@ class DestinoController {
       const camposObrigatorios = { destino_nome, localizacao, cep, latitude, longitude };
 
       const erros = validarCamposObrigatorios(camposObrigatorios);
-
+      console.log(erros, camposObrigatorios);
       if (erros.length > 0) {
         return res.status(400).json({ message: erros });
       }

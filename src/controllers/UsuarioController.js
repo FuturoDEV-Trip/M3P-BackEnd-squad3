@@ -4,14 +4,15 @@ const bcrypt = require('bcrypt')
 
 class UsuarioController {
   async consultar(req, res) {
-    try {
-      const usuarios = await Usuario.findAll();
-      res.status(200).json(usuarios);
-    } catch (error) {
-      console.error(error.message);
-      res.status(500).json({ error: 'Erro ao processar a solicitação' });
+      try {
+        const usuarios = await Usuario.findAll({
+          attributes: ['id', 'nome', 'email', 'data_nascimento', 'sexo', 'logradouro', 'numero', 'bairro', 'cidade', 'estado', 'cep']
+        });
+        res.status(200).json(usuarios);
+      } catch (error) {
+        console.error("Erro ao consultar os usuários", error);
+      }
     }
-  }
 
   async cadastrar(req, res) {
     try {
