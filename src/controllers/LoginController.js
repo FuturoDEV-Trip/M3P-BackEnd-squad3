@@ -50,15 +50,20 @@ class LoginController {
                 where: { id: tokenDecoded.id }
             })
 
-            if (!!usuario) {
-                await Usuario.update({ ...usuario, logado: false }, { where: { id: tokenDecoded.id } });
-            }
+            if (usuario) {
+                
+                await Usuario.update({ logado: false }, { where: { id: tokenDecoded.id } });
 
-            res.status(200).json({
-                message: 'Logout realizado com sucesso', token: tokenDecoded
-            });
+                res.status(200).json({
+                    message: 'Logout realizado com sucesso',
+                    token: tokenDecoded
+                });
+            } else {
+                res.status(404).json({ message: 'Usuário não encontrado' });
+            }
         } catch (err) {
-            return res.status(500).json({ error: err, message: 'Erro servidor' })
+            console.error('Erro ao realizar logout:', err);
+            return res.status(500).json({ error: err.message, message: 'Erro no servidor ao realizar logout' });
         }
     }
 }

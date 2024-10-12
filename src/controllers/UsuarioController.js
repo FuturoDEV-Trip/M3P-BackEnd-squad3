@@ -6,7 +6,7 @@ class UsuarioController {
   async consultar(req, res) {
       try {
         const usuarios = await Usuario.findAll({
-          attributes: ['id', 'nome', 'email', 'data_nascimento', 'sexo', 'logradouro', 'numero', 'bairro', 'cidade', 'estado', 'cep']
+          attributes: ['id', 'nome','email', 'data_nascimento', 'sexo', 'logradouro', 'numero', 'bairro', 'cidade', 'estado', 'cep']
         });
         res.status(200).json(usuarios);
       } catch (error) {
@@ -16,11 +16,16 @@ class UsuarioController {
 
   async cadastrar(req, res) {
     try {
+      console.log('log backend',req.body)
       const { nome, cpf, email, senha, logradouro, bairro, cidade, estado, numero, data_nascimento, sexo } = req.body;
 
+      const usuarios = await Usuario.findAll({
+        attributes: ['cpf', 'email']
+      });
+      console.log('log backend',req.body)
       const cep = req.body.cep.replace(/[^0-9]/g, "");
 
-      if (cpf.length < 11 || cpf.length > 11) {
+      if (cpf.length !== 11) {
         return res.status(400).json({ error: 'preenchimento somente números 11 digitos' });
       }
       if (!nome) {
@@ -33,7 +38,7 @@ class UsuarioController {
           message: 'A senha é um campo obrigatório!'
         })
       }
-      if (cep.length < 8 || cep.length > 8) {
+      if (cep.length !== 8) {
         return res.status(400).json({ error: 'O preenchimento do campo cep é obrigatório' });
       }
       if (!logradouro || !bairro || !cidade || !estado) {
@@ -55,7 +60,6 @@ class UsuarioController {
       }
 
       const sexoConversaoMinusculo = sexo.toLowerCase();
-      console.log(sexoConversaoMinusculo)
 
       if (!['masculino', 'feminino', 'outro'].includes(sexoConversaoMinusculo)) {
         return res.status(400).json({
