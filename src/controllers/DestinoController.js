@@ -22,7 +22,7 @@ class DestinoController {
 
     try {
       const destino = await Destino.findByPk(id,{
-        attributes:['destino_nome','localizacao','descricao','latitude','longitude']
+        attributes:['destino_nome','localizacao','descricao','latitude','longitude','usuario_id']
       });
 
       if (!destino) {
@@ -97,7 +97,6 @@ class DestinoController {
     }
   }
 
-
   async listarPorId(req, res) {
     const { usuario_id } = req.params;
     const autenticacao_id = req.payload.sub;
@@ -107,25 +106,20 @@ class DestinoController {
       return res.status(403).json({ message: 'Usuário não autorizado' });
     }
 
-
     try {
       const usuario = await Usuario.findByPk(autenticacao_id);
-
 
       if (!usuario) {
         return res.status(404).json({ message: 'Usuário não encontrado' });
       }
 
-
       const destinoUsuario = await Destino.findAll({
         where: { usuario_id: autenticacao_id }
       });
 
-
       if (destinoUsuario.length === 0) {
         return res.status(404).json({ message: 'Destino não encontrado' });
       }
-
 
       res.status(200).json(destinoUsuario);
     } catch (error) {
