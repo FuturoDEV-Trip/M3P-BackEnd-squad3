@@ -1,6 +1,18 @@
 version: '3'
 
 services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile 
+    container_name: backend-app
+    ports:
+      - "3000:3000"  
+    environment:
+      - NODE_END=production
+    depends_on:
+      - db
+
   db:
     image: postgres
     container_name: meu-servidor-postgres
@@ -15,3 +27,5 @@ services:
 
 volumes:
   postgres_data:
+
+
