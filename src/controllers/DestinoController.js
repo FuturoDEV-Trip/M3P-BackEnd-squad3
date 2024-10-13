@@ -22,7 +22,7 @@ class DestinoController {
 
     try {
       const destino = await Destino.findByPk(id,{
-        attributes:['destino_nome','localizacao','descricao','latitude','longitude','usuario_id']
+        attributes:['destino_nome','localizacao','descricao','latitude','longitude','usuario_id','cep']
       });
 
       if (!destino) {
