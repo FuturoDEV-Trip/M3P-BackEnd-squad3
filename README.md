@@ -74,17 +74,9 @@ Implementar um sistema de gamificação onde os usuários ganham pontos e recomp
 
 12. Criação de interfaces de usuário dinâmicas e reutilizáveis. Assim, facilitando a construção de componentes interativos e melhorando a performance com o virtual DOM. Ideal para desenvolver aplicações web modernas e escaláveis.
 
-13. React Router: Permite o roteamento em aplicações React. Foi usada para gerenciar a navegação entre as diferentes páginas do aplicativo, como Home, Login, Cadastro e Detalhes de Passeio, permitindo a criação de URLs amigáveis.
+13. Docker: containerização que permite empacotar a aplicação e suas dependências em contêineres, garantindo que o software rode de maneira consistente em qualquer ambiente.
 
-14. PropTypes: Utilizada para verificar o tipo de dados das props em componentes React. Além disso, garante que os componentes recebam os tipos corretos de dados, ajudando na manutenção e evitando erros em tempo de execução.
-
-15. Hooks (useState, useEffect): Permitem gerenciar estado e efeitos colaterais em componentes funcionais. useState foi utilizado para controlar o estado dos formulários e listas, enquanto useEffect poderia ser usado para gerenciar operações assíncronas, como fetch de dados.
-
-16. Docker: containerização que permite empacotar a aplicação e suas dependências em contêineres, garantindo que o software rode de maneira consistente em qualquer ambiente
-
-17. Yup: validação de esquemas para JavaScript. Ela foi utilizada no projeto para validar formulários, garantindo que os dados inseridos pelos usuários estejam corretos antes de serem enviados ao backend.
-
-18. Vite: ferramenta de build rápida para projetos frontend modernos, no projeto "DescubraFloripa", o Vite foi usado para criar e gerenciar o ambiente de desenvolvimento, oferecendo uma experiência mais rápida e leve em comparação com outras ferramentas tradicionais como o Webpack.
+14.  Yup: validação de esquemas para JavaScript. Ela foi utilizada no projeto para validar formulários, garantindo que os dados inseridos pelos usuários estejam corretos antes de serem enviados ao backend.
 
 # Logotipo:
 
