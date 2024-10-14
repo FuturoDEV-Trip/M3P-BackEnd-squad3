@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize')
 const { connection } = require('../database/connection')
-const Usuario = require('./Usuario')
+const {Usuario} = require('./Usuario')
 
 const Destino = connection.define('destinos', {
     destino_nome:{
@@ -13,13 +13,13 @@ const Destino = connection.define('destinos', {
      type: DataTypes.STRING,
     },
     cep:{
-     type: DataTypes.INTEGER, 
+     type: DataTypes.STRING, 
     },
     latitude:{
-     type: DataTypes.FLOAT,
+     type: DataTypes.STRING,
     },
     longitude:{
-     type: DataTypes.FLOAT, 
+     type: DataTypes.STRING, 
     }
 })
 

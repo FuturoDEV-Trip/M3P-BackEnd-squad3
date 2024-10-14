@@ -1,10 +1,10 @@
 const { Router } = require("express")
 const LoginController = require("../controllers/LoginController")
-const Usuario = require("../models/Usuario")
+const {Usuario} = require("../models/Usuario")
 const { sign } = require("jsonwebtoken")
 const loginRoutes = Router()
 
-loginRoutes.post('/', LoginController.login
+loginRoutes.post('/login', LoginController.login
      /*
     #swagger.tags = ['Login'],
     #swagger.parameters['body'] = {
@@ -17,6 +17,6 @@ loginRoutes.post('/', LoginController.login
     }
    */
    )
-
+loginRoutes.post('/logout', LoginController.logout)
 
 module.exports = loginRoutes

@@ -1,72 +1,70 @@
 const axios = require('axios')
 const Destino = require("../models/Destino")
-const Usuario = require("../models/Usuario")
+const jwt = require('jsonwebtoken')
+const { Usuario } = require("../models/Usuario")
 
 class DestinoController {
   async consultar(req, res) {
-    const cep = req.params.cep;
 
     try {
-      const response = await axios.get(`https://nominatim.openstreetmap.org/search?format=json&postalcode=${cep}&country=Brazil&limit=1`);
-      console.log(response.data);
-      res.status(200).json(response.data);
+      const destinos = await Destino.findAll({
+        attributes: ['id','destino_nome', 'localizacao', 'descricao', 'latitude', 'longitude','usuario_id']
+      });
+      res.status(200).json(destinos);
+
     } catch (error) {
       console.error("Erro ao consultar o CEP", error);
       res.status(500).send({ error: 'Erro ao processar a solicitação' });
     }
   }
-
-
-  async cadastrar(req, res) {
-    const { destino_nome, localizacao, descricao, cep, latitude, longitude } = req.body;
+  async consultarPorId(req, res) {
+    const { id } = req.params;
 
     try {
-      const usuario_id = req.payload.sub
-      const autenticacao_id = req.payload.sub
+      const destino = await Destino.findByPk(id,{
+        attributes:['destino_nome','localizacao','descricao','latitude','longitude','usuario_id','cep']
+      });
 
-      if(!autenticacao_id){
-        return res.status(403).json({ message: 'Usuário não autorizado!' });
+      if (!destino) {
+        return res.status(404).json({ message: 'Destino não encontrado' });
       }
 
-      if (!destino_nome) {
-        return res.status(400).json({ message: 'O preenchimento do campo destino é obrigatório!' });
+      res.status(200).json(destino);
+    } catch (error) {
+      console.error("Erro ao consultar destino por ID", error);
+      res.status(500).send({ error: 'Erro ao processar a solicitação' });
+    }
+  }
+
+  async cadastrar(req, res) {
+    const { descricao, cep, latitude, longitude, bairro, cidade, estado,logradouro, local } = req.body;
+    
+    const destino_nome = local;
+    const localizacao = `${logradouro}, ${bairro}, ${cidade}, ${estado}`;
+
+    try {
+      const idUsuario = req.user.id;
+
+      const camposObrigatorios = { destino_nome, localizacao, cep, latitude, longitude };
+
+      const erros = validarCamposObrigatorios(camposObrigatorios);
+      console.log(erros, camposObrigatorios);
+      if (erros.length > 0) {
+        return res.status(400).json({ message: erros });
       }
 
-      if (!localizacao) {
-        return res.status(400).json({ message: 'O preenchimento do campo localização é obrigatório!' });
+      function validarCamposObrigatorios(campos) {
+        return Object.keys(campos).filter(campo => !campos[campo]);
       }
-
-      if (!descricao) {
-        return res.status(400).json({ message: 'O preenchimento do campo descrição é obrigatório!' });
-      }
-
-      if (!cep) {
-        return res.status(400).json({ message: 'O preenchimento do campo cep é obrigatório!' });
-      }
-
-
-      if (!latitude) {
-        return res.status(400).json({ message: 'O preenchimento do campo latitude é obrigatório!' });
-      }
-
-
-      if (!longitude) {
-        return res.status(400).json({ message: 'O preenchimento do campo longitude é obrigatório!' });
-      }
-
-
-      const data = await axios.get(
-        `https://nominatim.openstreetmap.org/search?format=json&postalcode=${cep}&country=Brazil&limit=1`
-      );
-
 
       const destino = await Destino.create({
         destino_nome,
         localizacao,
         descricao,
         cep,
-        latitude: data.data[0].lat,
-        longitude: data.data[0].lon
+        latitude: latitude,
+        longitude: longitude,
+        usuario_id: idUsuario
       });
       res.status(201).json(destino);
     } catch (error) {
@@ -81,21 +79,22 @@ class DestinoController {
     }
   }
 
-
   async excluir(req, res) {
-    const { destino_id } = req.params;
-
-
+    const {id}  = req.params;
+    const usuarioId = req.user.id;
     try {
-      const destino = await Destino.destroy({
-        where: { id: destino_id }
-      });
 
+      console.log("id do destino: ", id);
+      console.log("id do usuario: ", usuarioId);
+
+      const destino = await Destino.findOne({
+        where: { id: id, usuario_id: usuarioId }
+      });
 
       if (!destino) {
         return res.status(404).json({ message: 'Destino não encontrado' });
       }
-
+      await destino.destroy();
 
       res.status(204).json();
     } catch (error) {
@@ -103,7 +102,6 @@ class DestinoController {
       res.status(500).send({ error: 'Erro ao processar a solicitação' });
     }
   }
-
 
   async listarPorId(req, res) {
     const { usuario_id } = req.params;
@@ -113,25 +111,20 @@ class DestinoController {
       return res.status(403).json({ message: 'Usuário não autorizado' });
     }
 
-
     try {
       const usuario = await Usuario.findByPk(autenticacao_id);
-
 
       if (!usuario) {
         return res.status(404).json({ message: 'Usuário não encontrado' });
       }
 
-
       const destinoUsuario = await Destino.findAll({
         where: { usuario_id: autenticacao_id }
       });
 
-
       if (destinoUsuario.length === 0) {
         return res.status(404).json({ message: 'Destino não encontrado' });
       }
-
 
       res.status(200).json(destinoUsuario);
     } catch (error) {
