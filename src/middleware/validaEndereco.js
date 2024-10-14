@@ -16,7 +16,7 @@ async function validaEndereco(req, res, next) {
     next()
 } catch (error) {
     return res.status(500).json({
-        message: "Erro ao buscar endereço!",
+        message: "Erro ao buscar endereço!"
     })
 }
 

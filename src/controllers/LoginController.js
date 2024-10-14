@@ -1,6 +1,12 @@
+<<<<<<< HEAD
+const bcrycpt = require('bcryptjs')
+const { sign } = require('jsonwebtoken')
+const Usuario = require("../models/Usuario")
+=======
 const { Usuario } = require("../models/Usuario")
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+>>>>>>> 41b6eea153e669dbf4bf50b55d6efa1cce7969c7
 
 
 class LoginController {
@@ -20,9 +26,20 @@ class LoginController {
             if (!usuario) {
                 return res.status(404).json({ erro: 'Nenhum usuário corresponde ao e-mail informado' })
             }
+<<<<<<< HEAD
+            const validandoSenha = await bcrycpt.compare(senha, usuario.senha)
+            
+            if(!validandoSenha) {
+                return res.status(401).json({ erro: 'Senha incorreta!' })
+
+            }
+            const payload = { usuario_id: usuario.id, email: usuario.email, nome: usuario.nome }
+            const token = sign(payload, process.env.SECRET_JWT, { expiresIn: "1h"})
+=======
             await Usuario.update({ ...usuario, logado: true }, { where: { id: usuario.id } });
 
             const senhaCriptografada = await bcrypt.compare(senha, usuario.senha)
+>>>>>>> 41b6eea153e669dbf4bf50b55d6efa1cce7969c7
 
             if (!senhaCriptografada) {
                 return res.status(400).json({ erro: 'Nenhum usuario corresponde ao email e senha informados' })

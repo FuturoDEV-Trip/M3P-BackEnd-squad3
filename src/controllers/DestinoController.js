@@ -5,6 +5,7 @@ const { Usuario } = require("../models/Usuario")
 
 class DestinoController {
   async consultar(req, res) {
+    const cep = req.params.cep;
 
     try {
       const destinos = await Destino.findAll({
@@ -43,14 +44,33 @@ class DestinoController {
     const localizacao = `${logradouro}, ${bairro}, ${cidade}, ${estado}`;
 
     try {
-      const idUsuario = req.user.id;
+      const usuario_id = req.payload.sub
+      const autenticacao_id = req.payload.sub
 
-      const camposObrigatorios = { destino_nome, localizacao, cep, latitude, longitude };
+      if(!autenticacao_id){
+        return res.status(403).json({ message: 'Usuário não autorizado!' });
+      }
 
+      if (!destino_nome) {
+        return res.status(400).json({ message: 'O preenchimento do campo destino é obrigatório!' });
+      }
+
+      if (!localizacao) {
+        return res.status(400).json({ message: 'O preenchimento do campo localização é obrigatório!' });
+      }
+
+      if (!descricao) {
+        return res.status(400).json({ message: 'O preenchimento do campo descrição é obrigatório!' });
+      }
+
+      if (!cep) {
+        return res.status(400).json({ message: 'O preenchimento do campo cep é obrigatório!' });
+   
       const erros = validarCamposObrigatorios(camposObrigatorios);
       console.log(erros, camposObrigatorios);
       if (erros.length > 0) {
         return res.status(400).json({ message: erros });
+
       }
 
       function validarCamposObrigatorios(campos) {

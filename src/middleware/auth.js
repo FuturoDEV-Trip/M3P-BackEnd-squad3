@@ -4,27 +4,29 @@ const jwt = require('jsonwebtoken')
 async function auth(req, res, next) {
    try {
 
-      let token = await req.headers['authorization'];
-      if (!token) return res.status(401).send('Acesso negado! Token não fornecido.');
+    const autoHeader = req.headers.authorization
+         if(!autoHeader) {
+            return res.status(401).send({
+               message: "Token não fornecido!",
+               cause: error.message
+            })
+         }
+         const token = autoHeader.split(' ')[1]
 
-      console.log("Antes do slice: ", token);
+         if(!token) {
+            return res.status(401).send({
+               message: "Token com erro!"
+            })
+         }
 
-      if (token.startsWith('Bearer ')) {
-         token = token.slice(7);
-      }
+      req['payload'] = verify(token, process.env.SECRET_JWT)
 
-      console.log("depois do slice: ", token);
-
-      jwt.verify(token, process.env.SECRET_JWT, (err, user) => {
-         if (err) return res.status(403).send('Token inválido!');
-         req.user = user;
-         next();
-      });
+      next()
    } catch (error) {
-      return res.status(401).json({
-         message: "Autenticação falhou!",
-         cause: error.message
-      });
+      return res.status(401).send({
+      message: "Autenticação falhou!",
+      cause: error.message
+    })
    }
 }
 
