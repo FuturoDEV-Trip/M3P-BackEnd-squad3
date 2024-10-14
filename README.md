@@ -86,7 +86,7 @@ Implementar um sistema de gamificação onde os usuários ganham pontos e recomp
 ![image](https://github.com/user-attachments/assets/36c8e3de-7dc0-419e-93f9-f7b1df4ba494)
 
 
-# Fluxo do usário 
+# Fluxo do usuário 
 
 ![image](https://github.com/user-attachments/assets/5e2f0367-4d03-4784-bc09-ba0ee3c7d8f3)
 
@@ -171,5 +171,28 @@ Caso prefira executar o projeto utilizando Docker:
 
 # Estrutura de Pastas Back End
 ![image](https://github.com/user-attachments/assets/ae0a278e-2e18-4e89-a77c-9cfa250ba10a)
+
+# Páginas do APP
+
+* Página de login: Acesso às páginas privadas do sistema.(pública)
+![Estrutura](/src/assets/pagina%20de%20login.png)
+
+* Página Dashboard: Página Principal da Aplicação (Home)
+![Fluxo do usuário no APP](/src/assets/pagina-dashboard-publica.png)
+
+* Página de Dashboard: Privada (Após o login)
+![Dashboard-privado](/src/assets/pagina-dashboard.png)
+
+* Página de Cadastro de novos usuários 
+![Cadastro](/src/assets/paginacadastroreadme.png)
+
+* Página Cadastro de Locais de visitação 
+![Cadastro](/src/assets/página-cadastro-locais.png)
+
+* Página Listagem de locais
+![Cadastro](/src/assets/página-listagem-locais.png)
+
+**Versão FrontEnd do Projeto:**
+`https://github.com/FuturoDEV-Trip/M3P-FrontEnd-squad3`
 
 ### Desenvolvido por Rayssa Freitas, Daiane Arruda, Roni Rodrigues, Diego Aquino e Lívia Carvalho

@@ -1,6 +1,9 @@
 const { Usuario } = require('../models/Usuario')
 const { validandoSenha } = require('../services/validation.service')
-const bcrypt = require('bcrypt')
+
+const bcrycpt = require('bcryptjs')
+const yup = require('yup');
+
 
 class UsuarioController {
   async consultar(req, res) {
@@ -73,6 +76,13 @@ class UsuarioController {
         })
       }
       const senhaEncriptada = await bcrypt.hash(senha, 10);
+
+
+      //  if(!logradouro || !bairro || !cidade || !estado) {
+      //   return res.status(400).json({
+      //     message:"Erro ao obter o endereço. Verifique o CEP informado!"
+      //  })
+      // }
 
       const novoUsuario = await Usuario.create({
         nome: nome,
