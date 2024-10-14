@@ -91,11 +91,11 @@ Implementar um sistema de gamificação onde os usuários ganham pontos e recomp
 
 # Modelagem de banco de dados
 
-![FModelagem](/src/assets/Modelagemdedados.jpg)
+![image](https://github.com/user-attachments/assets/36c8e3de-7dc0-419e-93f9-f7b1df4ba494)
 
 # Fluxo do usário 
 
-![Fluxo do usuário no APP](/src/assets/Fluxo-usuario.jpg)
+![image](https://github.com/user-attachments/assets/5e2f0367-4d03-4784-bc09-ba0ee3c7d8f3)
 
 # Funcionalidades
 
