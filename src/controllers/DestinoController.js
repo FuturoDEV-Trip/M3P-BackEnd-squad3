@@ -69,7 +69,13 @@ class DestinoController {
       res.status(201).json(destino);
     } catch (error) {
       console.error("Erro ao cadastrar destino", error);
+     
       res.status(500).send({ error: 'Erro ao processar a solicitação' });
+
+      res.status(500).send({
+        error: 'Erro ao cadastrar destino',
+        cause: error.message
+      });
     }
   }
 
@@ -100,7 +106,6 @@ class DestinoController {
   async listarPorId(req, res) {
     const { usuario_id } = req.params;
     const autenticacao_id = req.payload.sub;
-
 
     if (parseInt(usuario_id) !== autenticacao_id) {
       return res.status(403).json({ message: 'Usuário não autorizado' });

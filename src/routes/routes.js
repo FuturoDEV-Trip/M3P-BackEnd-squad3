@@ -19,7 +19,7 @@ routes.use('/docs', swaggerUi.serve)
 routes.get('/docs', swaggerUi.setup(swaggerDocument))
 
 routes.get('/', (req, res) => {
- res.status(200).json({nome: 'Seja bem-vindo(a) a uma aplicação criada por Rayssa Freitas :) '})
+ res.status(200).json({nome: 'Seja bem-vindo(a) ao DescubraFloripa'})
 })
 
 module.exports = routes

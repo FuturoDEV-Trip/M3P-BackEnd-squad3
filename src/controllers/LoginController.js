@@ -2,6 +2,7 @@ const { Usuario } = require("../models/Usuario")
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
+
 class LoginController {
     async login(req, res) {
         try {
@@ -17,7 +18,7 @@ class LoginController {
             })
 
             if (!usuario) {
-                return res.status(404).json({ erro: 'Nenhum usuario corresponde ao email e senha informados' })
+                return res.status(404).json({ erro: 'Nenhum usuário corresponde ao e-mail informado' })
             }
             await Usuario.update({ ...usuario, logado: true }, { where: { id: usuario.id } });
 
@@ -45,6 +46,7 @@ class LoginController {
             }
 
             let tokenDecoded = await jwt.verify(token, process.env.SECRET_JWT);
+
 
             const usuario = await Usuario.findOne({
                 where: { id: tokenDecoded.id }
