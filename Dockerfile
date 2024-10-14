@@ -6,11 +6,11 @@ COPY . .
 
 RUN npm install
 
-RUN npm run build
+CMD [ "npm", "start" ]
 
 FROM nginx:alpine AS prod
 
-COPY --from=dock /app/dist /usr/share/nginx/html
+COPY --from=dock /app /usr/share/nginx/html
 
 EXPOSE 80
 EXPOSE 443
