@@ -87,6 +87,7 @@ Implementar um sistema de gamificação onde os usuários ganham pontos e recomp
 18. Vite: ferramenta de build rápida para projetos frontend modernos, no projeto "DescubraFloripa", o Vite foi usado para criar e gerenciar o ambiente de desenvolvimento, oferecendo uma experiência mais rápida e leve em comparação com outras ferramentas tradicionais como o Webpack.
 
 # Logotipo:
+
 <img src="https://github.com/user-attachments/assets/63868f0a-f995-4f41-902b-87b95ac0cfce" alt="Logo Descubra Floripa" width="300"/> 
 
 # Modelagem de banco de dados
@@ -115,7 +116,7 @@ git clone https://github.com/SeuUsuario/DescubraFloripa-Frontend.git
 2. Navegue até o diretório do projeto:
 cd DescubraFloripa-MP3-BackEnd-squad3
 
-### Intalação das dependências:
+### Instalação das dependências:
 1. `npm install`
 2. Em ambiente local: `npm install --dev`
 
@@ -133,9 +134,14 @@ cd DescubraFloripa-MP3-BackEnd-squad3
 
 ### Para carregar Seeders
 #### `sequelize db:seed:all`
-      
-O projeto estará disponível em http://localhost:3000
 
+#### Execução com Docker (opcional):
+Caso prefira executar o projeto utilizando Docker:
+
+1. Certifique-se de ter o Docker e o Docker Compose instalados em sua máquina.
+2. Construa e execute os contêineres:
+#### `docker-compose up --build`
+      
 ### Instalação do Bcrypt
 #### `npm install bcrypt`
 
@@ -171,5 +177,9 @@ O projeto estará disponível em http://localhost:3000
 
 ### Instalação do Swagger AutoGen
 #### `npm install swagger-autogen`
+
+# Estrutura de Pastas Front End
+
+![image](https://github.com/user-attachments/assets/ae0a278e-2e18-4e89-a77c-9cfa250ba10a)
 
 ### Desenvolvido por Rayssa Freitas, Daiane Arruda, Roni Rodrigues, Diego Aquino e Lívia Carvalho
