@@ -1,4 +1,4 @@
-FROM node:22-alpine as dock
+FROM node:22-alpine AS dock
 
 WORKDIR /app
 
