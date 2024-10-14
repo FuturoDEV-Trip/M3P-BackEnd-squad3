@@ -66,7 +66,7 @@ module.exports = {
         localizacao: "Arraial do Cabo, RJ",
         latitude: "-27.598726",
         longitude: "-48.558485",
-        usuario_id: 2,
+        usuario_id: 3,
         createdAt: new Date(),
         updatedAt: new Date(),
       },

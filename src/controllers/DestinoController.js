@@ -23,7 +23,7 @@ class DestinoController {
 
     try {
       const destino = await Destino.findByPk(id,{
-        attributes:['destino_nome','localizacao','descricao','latitude','longitude']
+        attributes:['destino_nome','localizacao','descricao','latitude','longitude','usuario_id','cep']
       });
 
       if (!destino) {
@@ -38,7 +38,10 @@ class DestinoController {
   }
 
   async cadastrar(req, res) {
-    const { destino_nome, localizacao, descricao, cep, latitude, longitude } = req.body;
+    const { descricao, cep, latitude, longitude, bairro, cidade, estado,logradouro, local } = req.body;
+    
+    const destino_nome = local;
+    const localizacao = `${logradouro}, ${bairro}, ${cidade}, ${estado}`;
 
     try {
       const usuario_id = req.payload.sub
@@ -62,11 +65,12 @@ class DestinoController {
 
       if (!cep) {
         return res.status(400).json({ message: 'O preenchimento do campo cep é obrigatório!' });
-      }
+   
+      const erros = validarCamposObrigatorios(camposObrigatorios);
+      console.log(erros, camposObrigatorios);
+      if (erros.length > 0) {
+        return res.status(400).json({ message: erros });
 
-
-      if (!latitude) {
-        return res.status(400).json({ message: 'O preenchimento do campo latitude é obrigatório!' });
       }
 
       function validarCamposObrigatorios(campos) {
@@ -119,7 +123,6 @@ class DestinoController {
     }
   }
 
-
   async listarPorId(req, res) {
     const { usuario_id } = req.params;
     const autenticacao_id = req.payload.sub;
@@ -128,25 +131,20 @@ class DestinoController {
       return res.status(403).json({ message: 'Usuário não autorizado' });
     }
 
-
     try {
       const usuario = await Usuario.findByPk(autenticacao_id);
-
 
       if (!usuario) {
         return res.status(404).json({ message: 'Usuário não encontrado' });
       }
 
-
       const destinoUsuario = await Destino.findAll({
         where: { usuario_id: autenticacao_id }
       });
 
-
       if (destinoUsuario.length === 0) {
         return res.status(404).json({ message: 'Destino não encontrado' });
       }
-
 
       res.status(200).json(destinoUsuario);
     } catch (error) {

@@ -7,7 +7,6 @@ module.exports = {
   
       await queryInterface.bulkInsert('usuarios', [
         {
-          id: 1,
           nome: "Rayssa Maciel de Freitas",
           cpf: "78398747285",
           email: "rayssafreitas102@gmail.com",
@@ -25,7 +24,6 @@ module.exports = {
           updatedAt: new Date()
         },
         {
-          id: 2,
           nome: "Manoel dos Santos",
           cpf: "94738189037",
           email: "manoel.santos@gmail.com",
@@ -43,7 +41,6 @@ module.exports = {
           updatedAt: new Date()
         },
         {
-          id: 3,
           nome: "Manoela Pereira de Jesus",
           cpf: "63819278647",
           email: "manupereira@gmail.com",
@@ -61,11 +58,10 @@ module.exports = {
           updatedAt: new Date()
         },
         {
-          id: 4,
           nome: "João da Silva",
           cpf: "78398747284",
           email: "joao@email.com",
-          senha: bcript.hashSync("Joao1234", 10),
+          senha: bcript.hashSync("Joao1234!", 10),
           cep: "57037020",
           logradouro: "Avenida Almirante Álvaro Calheiros",
           numero: "123",
@@ -79,7 +75,6 @@ module.exports = {
           updatedAt: new Date()
         },
         {
-          id: 5,
           nome: "Maria da Silva",
           cpf: "78398747283",
           email: "maria@email.com",
