@@ -1,4 +1,4 @@
-# M3P-FrontEnd-squad3
+# M3P-BackEnd-squad3
 
 # DescubraFloripa - Frontend 
 
@@ -111,10 +111,9 @@ Implementar um sistema de gamificação onde os usuários ganham pontos e recomp
 Para executar o projeto localmente, siga os passos abaixo:
 
 1. Clone o repositório:
-git clone https://github.com/SeuUsuario/DescubraFloripa-Frontend.git
 
 2. Navegue até o diretório do projeto:
-cd DescubraFloripa-MP3-BackEnd-squad3
+`cd https://github.com/FuturoDEV-Trip/M3P-BackEnd-squad3.git`
 
 ### Instalação das dependências:
 1. `npm install`
@@ -178,8 +177,7 @@ Caso prefira executar o projeto utilizando Docker:
 ### Instalação do Swagger AutoGen
 #### `npm install swagger-autogen`
 
-# Estrutura de Pastas Front End
-
+# Estrutura de Pastas Back End
 ![image](https://github.com/user-attachments/assets/ae0a278e-2e18-4e89-a77c-9cfa250ba10a)
 
 ### Desenvolvido por Rayssa Freitas, Daiane Arruda, Roni Rodrigues, Diego Aquino e Lívia Carvalho
