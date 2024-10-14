@@ -1,6 +1,6 @@
 # M3P-BackEnd-squad3
 
-# DescubraFloripa - Frontend 
+# DescubraFloripa - BackEnd 
 
 ## Visão:
 
