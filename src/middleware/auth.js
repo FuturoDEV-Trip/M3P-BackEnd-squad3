@@ -19,7 +19,8 @@ async function auth(req, res, next) {
             })
          }
 
-      req['payload'] = verify(token, process.env.SECRET_JWT)
+      const decoded = jwt.verify(token, process.env.SECRET_JWT);
+      req.user = decoded;
 
       next()
    } catch (error) {

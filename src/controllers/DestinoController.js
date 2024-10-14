@@ -38,36 +38,18 @@ class DestinoController {
   }
 
   async cadastrar(req, res) {
-    const { descricao, cep, latitude, longitude, bairro, cidade, estado,logradouro, local } = req.body;
-    
-    const destino_nome = local;
-    const localizacao = `${logradouro}, ${bairro}, ${cidade}, ${estado}`;
+    const { descricao, cep, latitude, longitude, bairro, cidade, estado,logradouro, localizacao, local } = req.body;
+  
+    const destino_nome = cidade;
+    // const localidade = `${logradouro}, ${bairro}, ${cidade}, ${estado}`;
 
+    console.log(localizacao);
     try {
-      const usuario_id = req.payload.sub
-      const autenticacao_id = req.payload.sub
+      const usuario_id = req.user.id;
 
-      if(!autenticacao_id){
-        return res.status(403).json({ message: 'Usuário não autorizado!' });
-      }
-
-      if (!destino_nome) {
-        return res.status(400).json({ message: 'O preenchimento do campo destino é obrigatório!' });
-      }
-
-      if (!localizacao) {
-        return res.status(400).json({ message: 'O preenchimento do campo localização é obrigatório!' });
-      }
-
-      if (!descricao) {
-        return res.status(400).json({ message: 'O preenchimento do campo descrição é obrigatório!' });
-      }
-
-      if (!cep) {
-        return res.status(400).json({ message: 'O preenchimento do campo cep é obrigatório!' });
-   
+      const camposObrigatorios = { destino_nome, localizacao, cep, latitude, longitude };
       const erros = validarCamposObrigatorios(camposObrigatorios);
-      console.log(erros, camposObrigatorios);
+
       if (erros.length > 0) {
         return res.status(400).json({ message: erros });
 
@@ -78,27 +60,20 @@ class DestinoController {
       }
 
       const destino = await Destino.create({
-        destino_nome,
-        localizacao,
-        descricao,
-        cep,
+        destino_nome: destino_nome,
+        localizacao: localizacao,
+        descricao: descricao,
+        cep: cep,
         latitude: latitude,
         longitude: longitude,
-        usuario_id: idUsuario
+        usuario_id: usuario_id,
       });
       res.status(201).json(destino);
     } catch (error) {
       console.error("Erro ao cadastrar destino", error);
-     
       res.status(500).send({ error: 'Erro ao processar a solicitação' });
-
-      res.status(500).send({
-        error: 'Erro ao cadastrar destino',
-        cause: error.message
-      });
     }
   }
-
   async excluir(req, res) {
     const {id}  = req.params;
     const usuarioId = req.user.id;
@@ -152,7 +127,6 @@ class DestinoController {
       res.status(500).send({ error: 'Erro ao processar a solicitação' });
     }
   }
-
 
   async atualizar(req, res) {
     const { id } = req.params;
