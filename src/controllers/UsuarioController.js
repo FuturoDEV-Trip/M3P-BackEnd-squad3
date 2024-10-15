@@ -1,7 +1,7 @@
 const { Usuario } = require('../models/Usuario')
 const { validandoSenha } = require('../services/validation.service')
-const bcrycpt = require('bcryptjs')
-const yup = require('yup');
+const bcrypt = require('bcrypt')
+
 
 
 class UsuarioController {

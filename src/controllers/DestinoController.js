@@ -97,37 +97,7 @@ class DestinoController {
       res.status(500).send({ error: 'Erro ao processar a solicitação' });
     }
   }
-
-  async listarPorId(req, res) {
-    const { usuario_id } = req.params;
-    const autenticacao_id = req.payload.sub;
-
-    if (parseInt(usuario_id) !== autenticacao_id) {
-      return res.status(403).json({ message: 'Usuário não autorizado' });
-    }
-
-    try {
-      const usuario = await Usuario.findByPk(autenticacao_id);
-
-      if (!usuario) {
-        return res.status(404).json({ message: 'Usuário não encontrado' });
-      }
-
-      const destinoUsuario = await Destino.findAll({
-        where: { usuario_id: autenticacao_id }
-      });
-
-      if (destinoUsuario.length === 0) {
-        return res.status(404).json({ message: 'Destino não encontrado' });
-      }
-
-      res.status(200).json(destinoUsuario);
-    } catch (error) {
-      console.error("Erro ao listar destinos por ID", error);
-      res.status(500).send({ error: 'Erro ao processar a solicitação' });
-    }
-  }
-
+  
   async atualizar(req, res) {
     const { id } = req.params;
     const { destino_nome, localizacao, descricao, cep, latitude, longitude } = req.body;
