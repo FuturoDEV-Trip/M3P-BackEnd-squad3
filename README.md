@@ -175,22 +175,22 @@ Caso prefira executar o projeto utilizando Docker:
 # Páginas do APP
 
 * Página de login: Acesso às páginas privadas do sistema.(pública)
-![Estrutura](/src/assets/pagina%20de%20login.png)
+* ![pagina de login](https://github.com/user-attachments/assets/6b2bfcdf-94fc-4d1c-9390-f462faf09944)
 
 * Página Dashboard: Página Principal da Aplicação (Home)
-![Fluxo do usuário no APP](/src/assets/pagina-dashboard-publica.png)
+![pagina-dashboard-publica](https://github.com/user-attachments/assets/74f0cd40-5311-4cab-906e-ac40ced4d779)
 
 * Página de Dashboard: Privada (Após o login)
-![Dashboard-privado](/src/assets/pagina-dashboard.png)
+![pagina-dashboard](https://github.com/user-attachments/assets/06ad37ee-9f01-4a5c-9c90-d6d1b4e21be9)
 
 * Página de Cadastro de novos usuários 
-![Cadastro](/src/assets/paginacadastroreadme.png)
+![paginacadastroreadme](https://github.com/user-attachments/assets/7658f424-e371-4593-805c-2c04d0d78d5a)
 
 * Página Cadastro de Locais de visitação 
-![Cadastro](/src/assets/página-cadastro-locais.png)
+![página-cadastro-locais](https://github.com/user-attachments/assets/adaaf31a-4b07-42bb-93e5-cc0f39ae9cc5)
 
 * Página Listagem de locais
-![Cadastro](/src/assets/página-listagem-locais.png)
+![página-listagem-locais](https://github.com/user-attachments/assets/37d2685f-348b-4b63-bd02-f696e2703faf)
 
 **Versão FrontEnd do Projeto:**
 `https://github.com/FuturoDEV-Trip/M3P-FrontEnd-squad3`
