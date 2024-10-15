@@ -80,7 +80,7 @@ Implementar um sistema de gamificação onde os usuários ganham pontos e recomp
 
 # Logotipo:
 
-<img src="https://github.com/user-attachments/assets/63868f0a-f995-4f41-902b-87b95ac0cfce" alt="Logo Descubra Floripa" width="300"/> 
+<img src="https://github.com/user-attachments/assets/63868f0a-f995-4f41-902b-87b95ac0cfce" alt="Logo Descubra Floripa" width="200"/> 
 
 # Modelagem de banco de dados
 ![image](https://github.com/user-attachments/assets/36c8e3de-7dc0-419e-93f9-f7b1df4ba494)
